@@ -161,6 +161,7 @@ var invalidLines = metrics.NewCounter(`vm_rows_invalid_total{type="opentsdbhttp"
 func unmarshalTags(dst []Tag, o *fastjson.Object) ([]Tag, error) {
 	var err error
 	o.Visit(func(k []byte, v *fastjson.Value) {
+		logger.Errorf("tag value must be string; got %s; value=%s", v.Type(), v)
 		if v.Type() != fastjson.TypeString {
 			err = fmt.Errorf("tag value must be string; got %s; value=%s", v.Type(), v)
 			return
